@@ -1,4 +1,4 @@
-1. Put `EventStoryLine`, `CausalTM`, `EventCausalityData`, `SemEval`, and `FrameNet` datasets in the current directory.
+1. Put `EventStoryLine`, `CausalTM`, `EventCausalityData`, `SemEval`, and `FrameNet` datasets in the current directory. 
 `EventStoryLine: https://github.com/cltl/EventStoryLine`
 `EventCausalityData: https://cogcomp.seas.upenn.edu/page/resource_view/27`
 
