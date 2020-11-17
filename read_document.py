@@ -270,16 +270,15 @@ def main(argv=None):
 
     version = 'v1.0'
     
-    folder_name = 'EventStoryLine/'
-    ECBplusTopic = folder_name+'ECB+_LREC2014/ECB+/' 
-    ECBstarTopic = folder_name+'annotated_data/' + version +'/'
-    EvaluationTopic = folder_name+'evaluation_format/full_corpus/' + version +'/event_mentions_extended/'
-    EvaluationCrofTopic = folder_name+'evaluation_format/full_corpus/' + version +'/coref_chain/'
+    ECBplusTopic = 'ECB+_LREC2014/ECB+/' 
+    ECBstarTopic = 'annotated_data/' + version +'/'
+    EvaluationTopic = 'evaluation_format/full_corpus/' + version +'/event_mentions_extended/'
+    EvaluationCrofTopic = 'evaluation_format/full_corpus/' + version +'/coref_chain/'
 
 
     data_dict = {}
-    for topic in os.listdir(folder_name+'annotated_data/v1.0/'):
-        if os.path.isdir(folder_name+'annotated_data/v1.0/' + topic):
+    for topic in os.listdir('annotated_data/v1.0/'):
+        if os.path.isdir('annotated_data/v1.0/' + topic):
             dir1, dir2, dir3, dir4 = ECBplusTopic + topic, ECBstarTopic + topic, EvaluationTopic + topic, EvaluationCrofTopic + topic
             make_corpus(dir1, dir2, dir3, dir4, data_dict)
 

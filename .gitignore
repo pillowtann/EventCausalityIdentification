@@ -1,5 +1,0 @@
-crossdomain_data/
-__pycache__/
-*.json
-*.pickle
-notes_*

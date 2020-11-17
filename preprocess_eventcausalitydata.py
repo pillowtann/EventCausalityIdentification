@@ -3,7 +3,7 @@ import random
 from pytorch_pretrained_bert import BertTokenizer
 from util_eventcausalitydata import get_all_results, get_all_results2
 
-model_dir = 'bert-large-uncased' # uncased better
+model_dir = '/home/jliu/data/BertModel/bert-large-uncased' # uncased better
 tokenizer = BertTokenizer.from_pretrained(model_dir, do_lower_case=True)
 
 
