@@ -5,7 +5,7 @@ import numpy as np
 def build_embedding_table(word_map, wv_file, dim):
     res = [list()] * len(word_map)
     print('Reading word vector...')
-    for idx, line in enumerate(open(wv_file, 'r')):
+    for idx, line in enumerate(open(wv_file, 'r', encoding="utf8")):
         if idx % 50000 == 0:
             print('\rReading...', idx)
         line = line.split()
@@ -61,7 +61,7 @@ if __name__ == '__main__':
             all_token[i] = temp
         
 
-    wv_file = '/home/jliu/data/WordVector/GoogleNews-vectors-negative300.txt'
+    wv_file = r"D:\40 LanguageModels\GoogleNewsVectorsNegative300\GoogleNews-vectors-negative300.txt"
     dim = 300
     vec = build_embedding_table(word_map, wv_file, dim)
 

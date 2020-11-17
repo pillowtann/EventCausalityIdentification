@@ -2,9 +2,11 @@ import pickle
 import random
 from pytorch_pretrained_bert import BertTokenizer
 from concept_net_util import crawl_concept_net
+import logging
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
-
+logging.basicConfig(filename='log_preprocess_conceptnet.txt',filemode='a', format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s', datefmt='%H:%M:%S', level=logging.DEBUG)
+logging.info('----- new run -----')
 
 def add_knowledge(elem):
     # ['annotated_data/v1.0/12/12_1ecbplus.xml.xml', [101, 1996, 2796, 3212, 24248, 1996, 6084, 1997, 16298, 2006, 9432, 28409, 1037, 4800, 1011, 4049, 2886, 2011, 2712, 16908, 29560, 2006, 6432, 6470, 1010, 10439, 2890, 22342, 2075, 2656, 16831, 8350, 1998, 9530, 8873, 15782, 3436, 2608, 1998, 9290, 1010, 1999, 1996, 3587, 3144, 3424, 1011, 24386, 3169, 2144, 2244, 1012, 102], [101, 1996, 2796, 3212, 24248, 1996, 6084, 1997, 16298, 2006, 9432, 28409, 1037, 4800, 1011, 4049, 2886, 2011, 2712, 16908, 29560, 2006, 6432, 6470, 1010, 10439, 2890, 22342, 2075, 2656, 16831, 8350, 1998, 9530, 8873, 15782, 3436, 2608, 1998, 9290, 1010, 1999, 1996, 3587, 3144, 3424, 1011, 24386, 3169, 2144, 2244, 1012, 102], [33, 34, 35, 36], [25, 26, 27, 28], 'NULL']
@@ -47,9 +49,9 @@ def add_knowledge(elem):
         e1_start += yy_len
         e1_end += yy_len
     
-    print('_')
-    print(elem)
-    print([doc, temp2, temp2, list(range(e1_start, e1_end+1)), list(range(e2_start, e2_end+1)), label])
+    # print('_')
+    # print(elem)
+    # print([doc, temp2, temp2, list(range(e1_start, e1_end+1)), list(range(e2_start, e2_end+1)), label])
 
     return [doc, temp2, temp2, list(range(e1_start, e1_end+1)), list(range(e2_start, e2_end+1)), label]
     
@@ -57,7 +59,17 @@ def add_knowledge(elem):
 with open('data_bert.pickle', 'rb') as f:
     data = pickle.load(f)
 
-data_knowledge = [add_knowledge(elem) for elem in data]
+data_knowledge = []
+
+for idx, elem in enumerate(data):
+    try:
+        data_knowledge.append(add_knowledge(elem))
+    except:
+        doc, sen1, sen2, e1_offset, e2_offset, label = elem
+        logging.info('Connection Error')
+        logging.info('Error at:'+str(doc))
+        logging.info('Completed {} out of {} data points'.format(idx,len(data)))
+        break
 
 with open('data_knowledge.pickle', 'wb') as f:
     pickle.dump(data_knowledge, f, pickle.HIGHEST_PROTOCOL)
